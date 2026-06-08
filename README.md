@@ -39,7 +39,7 @@ Welcome to the official integration proposal for **Relish**. This document detai
 ### Key Capabilities:
 1. **URL Recipe Extraction**: Strips video scripts from platforms (e.g., YouTube) and transforms them into clean, structured recipes.
 2. **Hands-free Live Studio**: A full-duplex voice interface running on the **Gemini Multimodal Live API** (powered by `gemini-3.1-flash-live`) that guides users step-by-step through instructions.
-3. **Smart Shopping Cart**: Resolves recipe ingredients to local store inventory and builds automated instant grocery orders.
+3. **Smart Shopping Cart**: Resolves recipe ingredients to local store inventory and compiles grocery orders, which users can export directly to their Instamart cart via a button click. **For safety and friction-free control, ordering is not performed via voice.**
 
 ---
 
@@ -64,6 +64,9 @@ Welcome to the official integration proposal for **Relish**. This document detai
 
 Rather than using complex external database syncing, Relish plans to integrate with Swiggy Instamart's developer tools via a planned Model Context Protocol (MCP) server. From a feature perspective, the Gemini agent leverages these tools to solve real-world cooking preparation friction:
 
+> [!IMPORTANT]
+> **No Voice-Based Checkout**: To prevent accidental orders, the Gemini Multimodal Live voice interface is strictly utilized for hands-free cooking help, recipe walkthroughs, and pantry reviews. **Users cannot purchase items via voice commands.** To order, the user must explicitly click the physical "Buy from Instamart" button in the Relish application UI, which compiles the optimized list of missing ingredients and launches the Swiggy Instamart application for final address selection and payment.
+
 ### Key Integration Use Cases:
 1. **Order Missing Ingredients**: 
    When a user clicks "Buy from Instamart" on a recipe card (e.g., *Brown butter gnocchi*), the Relish agent checks the required ingredients against the user's digital pantry. Instead of ordering the whole recipe blindly, it filters out items already in stock (like salt, pepper, or olive oil) and adds only the missing items (like gnocchi or heavy cream) to the cart.
@@ -82,7 +85,7 @@ sequenceDiagram
     participant Tool as Instamart MCP Tool
     participant Swiggy as Swiggy Instamart App
 
-    User->>App: Click "Buy from Instamart" (or voice command)
+    User->>App: Click "Buy from Instamart" button
     App->>API: Post recipe ingredients & user geolocation
     API->>Gemini: Start shopping resolution agent session
     Gemini->>Tool: Search local dark store inventory

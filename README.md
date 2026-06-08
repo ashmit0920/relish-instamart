@@ -12,26 +12,26 @@ Welcome to the official integration proposal for **Relish**. This document detai
   ┌─────────────────────────────────────────────────────────────┐
   │                        React Native App                     │
   │                        (Expo, Tailwind)                     │
-  └──────────────┬───────────────────────────────▲──────────────┘
-                 │ PCM Audio / JSON              │ PCM Audio / JSON
-                 │ (WebSockets)                  │ (WebSockets)
-  ┌──────────────▼───────────────────────────────┴──────────────┐
-  │                       FastAPI Backend                       │
-  │     (Orchestration, Firebase Auth, Session Management)      │
-  └──────────────┬───────────────────────────────▲──────────────┘
-                 │ Bidirectional WS Stream       │ Bidirectional WS Stream
-                 │ (google-genai SDK)            │ (google-genai SDK)
-  ┌──────────────▼───────────────────────────────┴──────────────┐
-  │                 Gemini Multimodal Live API                  │
-  │       (Low-latency Gemini 3.1 Flash Live Engine)            │
-  └──────────────┬──────────────────────────────┘
-                 │ Tool Calls (MCP Protocol)
-  ┌──────────────▼──────────────────────────────┐
+  └──┬───────────┬───────────────────────────────▲──────────────┘
+     │           │ PCM Audio / JSON              │ PCM Audio / JSON
+     │           │ (WebSockets)                  │ (WebSockets)
+  ┌──│───────────▼───────────────────────────────┴──────────────┐
+  │  │                    FastAPI Backend                       │
+  │  │  (Orchestration, Firebase Auth, Session Management)      │
+  └──│───────────┬───────────────────────────────▲──────────────┘
+     │           │ Bidirectional WS Stream       │ Bidirectional WS Stream
+     │           │ (google-genai SDK)            │ (google-genai SDK)
+  ┌──│───────────▼───────────────────────────────┴──────────────┐
+  │  │              Gemini Multimodal Live API                  │
+  │  │    (Low-latency Gemini 3.1 Flash Live Engine)            │
+  └──│───────────┬──────────────────────────────────────────────┘
+     │           │ Tool Calls (MCP Protocol) - under evaluation
+  ┌──▼───────────▼──────────────────────────────────────────────┐
   │                Swiggy Instamart Integration                 │
-  │           (Search, Pantry Restock, Cart Resolution)          │
-  └──────────────┬──────────────────────────────┘
+  │           (Search, Pantry Restock, Cart Resolution)         │
+  └──────────────┬──────────────────────────────────────────────┘
                  │ Deep Link / Cart Exchange
-  ┌──────────────▼──────────────────────────────┐
+  ┌──────────────▼──────────────────────────────────────────────┐
   │                    Swiggy Instamart App                     │
   └─────────────────────────────────────────────────────────────┘
 ```
@@ -65,7 +65,7 @@ Welcome to the official integration proposal for **Relish**. This document detai
 Rather than using complex external database syncing, Relish plans to integrate with Swiggy Instamart's developer tools via a planned Model Context Protocol (MCP) server. From a feature perspective, the Gemini agent leverages these tools to solve real-world cooking preparation friction:
 
 > [!IMPORTANT]
-> **No Voice-Based Checkout**: To prevent accidental orders, the Gemini Multimodal Live voice interface is strictly utilized for hands-free cooking help, recipe walkthroughs, and pantry reviews. **Users cannot purchase items via voice commands.** To order, the user must explicitly click the physical "Buy from Instamart" button in the Relish application UI, which compiles the optimized list of missing ingredients and launches the Swiggy Instamart application for final address selection and payment.
+> **No Voice-Based Checkout**: To prevent accidental orders, the Gemini Multimodal Live voice interface is currently utilized for hands-free cooking help, recipe walkthroughs, and pantry reviews. **Users cannot purchase items via voice commands.** To order, the user must explicitly click the physical "Buy from Instamart" button in the Relish application UI, which compiles the optimized list of missing ingredients and launches the Swiggy Instamart application for final address selection and payment.
 
 ### Key Integration Use Cases:
 1. **Order Missing Ingredients**: 
